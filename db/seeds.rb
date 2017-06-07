@@ -5,3 +5,24 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+Airport.create([name: "New York City", code: "NYC"])
+Airport.create([name: "San Fransico", code: "SFO"])
+
+NYC = Airport.first
+SFO = Airport.second
+
+25.times do
+  flight = Flight.new(duration: 4, start: Faker::Time.between(Time.now, 2.months.from_now))
+  NYC.arriving_flights << flight
+  SFO.departing_flights << flight
+  flight.save
+end
+
+25.times do
+  flight = Flight.new(duration: 4, start: Faker::Time.between(Time.now, 2.months.from_now))
+  SFO.arriving_flights << flight
+  NYC.departing_flights << flight
+  flight.save
+end
