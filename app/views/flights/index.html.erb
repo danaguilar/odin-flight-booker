@@ -1,0 +1,27 @@
+<h1> SEARCH FORM HERE </h1>
+<%= form_for @flight, url: '/', method: :get do |f| %>
+  <%= f.label :to_airport, "Arriving at: "%>
+  <%= f.select(:to_airport, @airport_options) %>
+  <%= f.label :from_airport, "Departing from: " %>
+  <%= f.select(:from_airport, @airport_options) %>
+  <%= label_tag "Number of passengers" %>
+  <%= select_tag :num_tickets, options_for_select(@passengers) %>
+  <%= f.label :start, "Departure Date: " %>
+  <%= select_tag "flight[start]", options_from_collection_for_select(@flight_dates, :start, :date_formatted)%>
+  <br>
+  <%= f.submit "Check for flight" %>
+<% end %>
+
+
+
+<h2> Results here </h2>
+<% if @found_flights %>
+<%= form_tag({controller: :bookings, action: :new} , method: :get) %>
+  <% @found_flights.each do |flight| %>
+    <%= radio_button_tag(:new_flight, flight.id) %>
+    <%= label_tag(flight.id, flight.to_html) %>
+    <br> <br>
+  <% end %>
+  <%= hidden_field_tag :num_passengers, @num_passengers %>
+  <%= submit_tag "Book Flight" %>
+<% end %>

@@ -1,0 +1,16 @@
+<h1> FLIGHT NUMBER: <%= @flight.id %> </h1>
+<h3> Departing: <%= @flight.from_airport.code %> at <%= @flight.start.to_formatted_s %> </h3>
+<h3> Arriving: <%= @flight.to_airport.code %> </h3>
+
+<h4> Enter information for each passenger </h4>
+<%= form_tag({controller: :bookings, action: :create}, method: :post) %>
+  <% @booking.passengers.each do |passenger| %>
+    Enter Passenger information<br>
+    <%= label_tag passenger.name, :name %>
+    <%= text_field_tag passenger.name %>
+    <br>
+    <%= label_tag passenger.email, :email %>
+    <%= text_field_tag passenger.email %>
+    <br><br>
+  <% end %>
+  <%= submit_tag "Book that flight!" %>
