@@ -4,13 +4,14 @@
 
 <h4> Enter information for each passenger </h4>
 <%= form_tag({controller: :bookings, action: :create}, method: :post) %>
-  <% @booking.passengers.each do |passenger| %>
+  <% @booking.passengers.each_with_index do |passenger, index| %>
     Enter Passenger information<br>
-    <%= label_tag passenger.name, :name %>
-    <%= text_field_tag passenger.name %>
+    <%= label_tag "passenger[#{index}]", :name %>
+    <%= text_field_tag "[passenger][#{index}][name]" %>
     <br>
-    <%= label_tag passenger.email, :email %>
-    <%= text_field_tag passenger.email %>
+    <%= label_tag "passenger[#{index}]", :email %>
+    <%= text_field_tag "passenger[#{index}][email]" %>
+    <%= hidden_field_tag :new_flight, @flight.id %>
     <br><br>
   <% end %>
   <%= submit_tag "Book that flight!" %>
